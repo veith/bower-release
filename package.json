@@ -1,0 +1,23 @@
+{
+  "name": "release",
+  "version": "1.0.0",
+  "description": "Auto bower package release",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bower",
+    "release"
+  ],
+  "author": "veith zaech",
+  "license": "MIT",
+  "devDependencies": {
+    "cz-conventional-changelog": "^1.1.7"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
