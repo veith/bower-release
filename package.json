@@ -1,5 +1,5 @@
 {
-  "name": "release",
+  "name": "bower-release",
   "version": "1.0.0",
   "description": "Auto bower package release",
   "main": "index.js",
