@@ -39,14 +39,14 @@ inquirer.prompt(questions).then(function (answers) {
     fs.writeFile('bower.json', JSON.stringify(bowerfile), function functionName() {
       git.add(['./bower.json'], function (i) {
         git.commit('bower-release: Version ' + newVersion + ' released', function (i) {
-          addTag(newVersion)
+          addTag(newVersion);
+
         });
       });
 
-
     });
 
-    console.log(chalk.yellow(newVersion));
+    console.log('processing..., please wait a second.');
 
   } else {
     console.log(chalk.red('Wenn die Tests nicht durchlaufen macht es keinen Sinn eine neue Version zu releasen.'));
@@ -59,7 +59,9 @@ inquirer.prompt(questions).then(function (answers) {
 
 function addTag(version, handler) {
   git.addTag('v' + version, (e) => {
-    git.pushTags('origin');
+    git.pushTags('origin', function () {
+      console.log(chalk.yellow(newVersion) + ' successfull released to origin');
+    });
   }, handler);
 }
 
