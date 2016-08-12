@@ -8,7 +8,8 @@ const version = bowerfile.version.split('.').map((e) => parseInt(e))
 const user = process.env.USER;
 const pwd = process.env.PWD;
 const git = require('simple-git')(pwd);
-
+const remote = 'origin';
+const branch = 'master';
 console.log('\n\nHi ' + process.env.USER + ' Current version of ' + chalk.yellow.bold(bowerfile.name) + ' is ' + chalk.yellow(bowerfile.version));
 
 const questions = [
@@ -40,10 +41,8 @@ inquirer.prompt(questions).then(function (answers) {
       git.add(['./bower.json'], function (i) {
         git.commit('bower-release: Version ' + newVersion + ' released', function (i) {
           addTag(newVersion);
-
         });
       });
-
     });
 
     console.log('processing..., please wait a second.');
@@ -59,14 +58,16 @@ inquirer.prompt(questions).then(function (answers) {
 
 function addTag(version, handler) {
   git.addTag('v' + version, (e) => {
-    git.pushTags('origin', function () {
-      console.log(chalk.yellow(newVersion) + ' successfull released to origin');
+    git.push(remote, branch, function () {
+      git.pushTags(remote, function () {
+        console.log(chalk.yellow(version) + ' successfull released to origin');
+      });
     });
   }, handler);
 }
 
 function calculateNewVersionNumber(type, currentversion) {
-  var types = ['breacking', 'feature', 'patch']
+  const types = ['breacking', 'feature', 'patch'];
   currentversion[types.indexOf(type)]++;
   return currentversion.fill(0, types.indexOf(type) + 1).join('.');
 

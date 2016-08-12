@@ -4,7 +4,7 @@
   "description": "Auto bower package release",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified :-( \" && exit 1"
   },
   "keywords": [
     "bower",
@@ -14,6 +14,9 @@
   "license": "MIT",
   "devDependencies": {
     "cz-conventional-changelog": "^1.1.7"
+  },
+  "bin": {
+    "bower-release": "bin/bower-release.js"
   },
   "config": {
     "commitizen": {
