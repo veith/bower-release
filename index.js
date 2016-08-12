@@ -6,10 +6,16 @@ if (!fs.existsSync('bower.json')) {
   console.log(chalk.red('bower.json existiert nicht. \n Bist du wirklich in einem Bower Projekt?'));
   process.exit(2);
 }
-
+var version;
 var bowerfile = JSON.parse(fs.readFileSync('bower.json', 'utf8'));
 const exec = require('child_process').exec;
-const version = bowerfile.version.split('.').map((e) => parseInt(e));
+if(bowerfile.version){
+    version = bowerfile.version.split('.').map((e) => parseInt(e));
+}else{
+  console.log(chalk.red('bower.json does not have version information'));
+    version = [0,0,0];
+}
+
 
 const user = process.env.USER;
 const pwd = process.env.PWD;
