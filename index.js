@@ -28,6 +28,35 @@ var runTest = true;
 var skipQuestions = false;
 var typeOfChange = 'patch';
 
+
+
+var childProcess = require('child_process');
+
+function runScript(scriptPath, callback) {
+
+  // keep track of whether callback has been invoked to prevent multiple invocations
+  var invoked = false;
+
+  var process = childProcess.exec(scriptPath);
+
+  // listen for errors as they may prevent the exit event from firing
+  process.on('error', function (err) {
+    if (invoked) return;
+    invoked = true;
+    callback(err);
+  });
+
+  // execute the callback once the process has finished running
+  process.on('exit', function (code) {
+    if (invoked) return;
+    invoked = true;
+    var err = code === 0 ? null : new Error('exit code ' + code);
+    callback(err);
+  });
+
+}
+
+
 const questions = [
 
   {
@@ -74,7 +103,7 @@ process.argv.forEach(function (val, index, array) {
     console.log('\nIf your bower.json contains a scripts section, bower-release will execute the lint and test script');
     console.log('"scripts": {' +
         '\n        "lint": "polymer lint --input *.html demo/*.html",' +
-        '\n        "test": "polymer test"' +
+        '\n        "test": "polymer test test/*_test.html"' +
         '\n},...');
     console.log(chalk.red.bold('Usage and Options:'));
 
@@ -116,12 +145,17 @@ function doLint() {
   }
 }
 
+
+
+
 function doTests() {
-  if (runTest && bowerfile.scripts && bowerfile.scripts.lint) {
-    console.log('run tests... ');
-    exec(bowerfile.scripts.lint, (error, stdout, stderr) => {
+  if (runTest && bowerfile.scripts && bowerfile.scripts.test) {
+    console.log('run tests...... ');
+
+    runScript(bowerfile.scripts.test, (error) => {
       if (error) {
-        console.log(`stdout: ${stdout}`);
+        console.log(`stdout: ${error}`);
+        throw error;
         process.exit(3);
         return;
       }

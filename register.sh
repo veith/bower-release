@@ -1,0 +1,3 @@
+Curl command um zu registrieren
+
+curl 'http://adzh-srlp-rep03.intern.cube.ch:5678/packages/alu-environment' -H 'Pragma: no-cache' -H 'Origin: http://adzh-srlp-rep03.intern.cube.ch:5678' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4' -H 'User-Agent: bower-register' -H 'Content-Type: application/json;charset=UTF-8' -H 'Accept: application/json, text/plain, */*' -H 'Cache-Control: no-cache' -H 'Referer: http://adzh-srlp-rep03.intern.cube.ch:5678/' -H 'Cookie: _ga=GA1.2.1921927727.1468225751' -H 'Connection: keep-alive' --data-binary '{"url":"ssh://git@git.devres.internal.adcubum.com:7999/wbc/alu-environment.git"}' --compressed
